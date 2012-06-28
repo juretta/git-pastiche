@@ -20,11 +20,11 @@ To show the outgoing changes:
 
 List of commands:
 
-* git-incoming -> Show incoming changes (will fetch changes from the remote)
-* git-outgoing -> Show the changes about to be pushed to the remote
-* git-filesize-history -> Show the filesize history of a single file in the
+* `git incoming` -> Show incoming changes (will fetch changes from the remote)
+* `git outgoing` -> Show the changes about to be pushed to the remote
+* `git filesize-history` -> Show the filesize history of a single file in the
   repository
-* git-find-blob -> Given a blob id (SHA1), list the commits that contain the
+* `git find-blob` -> Given a blob id (SHA1), list the commits that contain the
   blob
-* git-sync-local-tags -> Delete local tags that don't exist in the remote
+* `git sync-local-tags` -> Delete local tags that don't exist in the remote
   anymore
