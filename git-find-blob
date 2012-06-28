@@ -1,0 +1,23 @@
+#!/bin/sh
+
+#
+# Find the commits that contain the given object id
+#
+
+if [ $# -lt 1 ]; then
+  echo "Usage: git find-blob SHA1 [git log options]"
+  echo ""
+  echo "    git find-blob 8e67180a935d28eba77ef1dbdb3daf5a837a67ac"
+  echo ""
+  exit -1
+fi
+
+blob="$1"
+shift
+git log "$@" --pretty=format:'%T %h %s' | while read tree commit subject ; do
+    if git ls-tree -r $tree | grep -q "${blob}" ; then
+        echo "${commit} ${subject}"
+    fi
+done
+
+# vim: set filetype=sh

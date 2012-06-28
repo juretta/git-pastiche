@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby == Synopsis 
+#
+# Delete local tags that have been removed in the remote
+#
+# == Usage
+#
+#   git sync-local-tags
+#
+# Or use "-n" for dry-run and print out what would be deleted without actually
+# deleting any local tags.
+#
+#   git sync-local-tags -n
+
+module Git
+  class SyncTags
+
+    def orphaned_tags
+      local_tags - remote_tags
+    end
+
+    def remove_unused_tags(print_only = false)
+      puts "No orphaned tags" if orphaned_tags.empty?
+      orphaned_tags.each do |tag|
+        puts "deleting local tag #{tag}"
+        `git tag -d #{tag}` unless print_only
+      end
+    end
+
+    def local_tags
+    `git tag -l`.split
+    end
+
+    def remote_tags
+    `git ls-remote --tags origin | grep -v '\^{' | awk '{print $2}' | awk -F '/' '{print $3}'`.split
+    end
+
+  end
+end
+
+
+Git::SyncTags.new.remove_unused_tags(ARGV.include?("-n"))
