@@ -16,14 +16,20 @@ set -u
 # Copied from: https://raw.github.com/juretta/bin/master/git-incoming
 
 # Return the name of the current branch
-function current_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; 
+CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+function tracking_branch {
+  branch_name=$1
+  git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads | grep -e "${branch_name}\$" | awk '{print $2}'
 }
 
-CURRENT_BRANCH=`current_branch`
+# Are we tracking a remote branch?
+TRACKING=$(tracking_branch ${CURRENT_BRANCH})
 
-# What branch are we tracking?
-TRACKING=$(git config branch.${CURRENT_BRANCH}.merge | ruby -ne 'print $_.gsub(/refs\/heads\//, "").strip')
+if [ -z "${TRACKING//[[:space:]]/}" ]; then
+    echo "The current branch '${CURRENT_BRANCH}' does not track an upstream branch"
+    exit -1
+fi
 
 # What's the name of the remote?
 REMOTE=$(git config branch.${CURRENT_BRANCH}.remote)
@@ -32,7 +38,7 @@ REMOTE=$(git config branch.${CURRENT_BRANCH}.remote)
 OPTS="--pretty=oneline --abbrev-commit --decorate"
 
 # URL of the remote we are tracking
-REMOTE_URL=$(git remote -v | ruby -e "puts STDIN.each_line.grep(/^${REMOTE}/).first.split[1]")
+REMOTE_URL=$(git config --get remote.${REMOTE}.url)
 
 # Fetch the changes from the remote.
 echo "Fetching changes from '"${REMOTE}"' (${REMOTE_URL})"
@@ -40,7 +46,7 @@ git fetch -q
 
 # E.g. for 'master':
 #  git log master..origin/master
-CHANGES=$(env PAGER="" git log --color --exit-code $OPTS ${CURRENT_BRANCH}..${REMOTE}/${TRACKING})
+CHANGES=$(env PAGER="" git log --color --exit-code $OPTS ${CURRENT_BRANCH}..${TRACKING})
 if [ $? -eq 0 ]; then
     echo "No changes on ${REMOTE} that are not already available on this branch."
 else
