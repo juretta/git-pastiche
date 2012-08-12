@@ -2,7 +2,9 @@
 
 if [ "$#" -lt 1 ]; then
   echo "Usage:"
+  echo ""
   echo "  git filesize-history PATH"
+  echo ""
   exit -1
 fi
 
