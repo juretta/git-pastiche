@@ -2,6 +2,8 @@
 
 # vim :set ft=sh
 
+set -u
+
 # Show the changes that need to be pushed to the remote the current branch is tracking.
 # If this script is in your $PATH it can be called like this:
 #
