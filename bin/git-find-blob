@@ -12,6 +12,9 @@ if [ $# -lt 1 ]; then
   exit -1
 fi
 
+set -u
+set -e
+
 blob="$1"
 shift
 git log "$@" --pretty=format:'%T %h %s' | while read tree commit subject ; do
