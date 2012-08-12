@@ -1,0 +1,23 @@
+.\" Manpage for git-filesize-history
+.TH man 1 "May 2012" "1.0" "git filesize-history man page"
+.SH NAME
+git filesize-history  \- Show how the filesize changed for a given PATH
+.SH SYNOPSIS
+git filesize-history PATH
+.SH DESCRIPTION
+Print out the filesize (human readable and in bytes) for the given path by traversing the history.
+
+This only prints the commits that are reachable from the current tip.
+.SH OPTIONS
+.TP
+.I PATH
+Path to a file in the local git repository. E.g.:
+.nf
+    git filesize-history src/Test.hs
+.fi
+.SH SEE ALSO
+git(1)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Stefan Saasen <stefan@saasen.me>

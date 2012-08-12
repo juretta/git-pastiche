@@ -1,54 +1,26 @@
-#!/usr/bin/env ruby
-# == Synopsis 
-#
-# Show the filesize history of blobs for a given path in the current git repository
-#
-# == Usage
-#
-# git filesize-history PATH
-#
-# E.g.
-#
-# git filesize-history src/Test.hs
-#
-#   Commit  b5388a5:  976.56 KB
-#   Commit  18898db:   329.00 B
-#   Commit  ac52f2f:     7.00 B
-require 'rubygems'
-require 'rdoc/usage'
+#!/bin/bash
 
-begin
-  require 'grit'
-rescue LoadError
-  puts 'Please install the "grit" gem first.'
-  puts "\t[sudo] gem install grit"
+if [ "$#" -lt 1 ]; then
+  echo "Usage:"
+  echo ""
+  echo "  git filesize-history PATH"
+  echo ""
   exit -1
-end
+fi
 
-RDoc::usage('usage') if ARGV.size < 1
-
-class Numeric
-  def to_human
-    units = %w{B KB MB GB TB}
-    e = (Math.log(self)/Math.log(1024)).floor
-    s = "%.2f" % (to_f / 1024**e)
-    #s.sub(/\.?0*$/, units[e])
-    "#{s} #{units[e]}"
-  end
-end
-
-def clean_path_relative(path)
-  File.expand_path(path).gsub(File.expand_path("."), '').gsub(/^\//, '')
-end
+set -u
+set -e
 
 
-PATH = clean_path_relative(ARGV.first.to_s)
+FILEPATH=$1
+FILENAME=`basename ${FILEPATH}`
 
-repo = Grit::Repo.new('.')
-commits = repo.log('master', PATH)
-commits.each do |commit|
-  blob = commit.tree/PATH
-  puts "Commit #{commit.id_abbrev.rjust(8)}: #{blob.size.to_human.rjust(10)}" if blob
-end
+#echo "File size history for \"${FILEPATH}\":"
 
-# vim: set filetype=ruby
+for commit in $(git log --pretty="%h" -- ${FILEPATH}); do
+  bytes="`git ls-tree -l -r ${commit} | grep ${FILENAME} | awk '{print $4}'`"
+  human=`echo ${bytes} | awk '{ split( "B KB MB GB TB" , v ); s=1; while( $1>1024 ){ $1/=1024; s++ } print int($1) v[s] }'`
+  printf "Commit %10b: %10b (%d bytes)\n" $commit $human $bytes
+done
+
+# vim: set filetype=sh

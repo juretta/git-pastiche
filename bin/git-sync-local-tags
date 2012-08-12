@@ -1,15 +1,4 @@
-#!/usr/bin/env ruby == Synopsis 
-#
-# Delete local tags that have been removed in the remote
-#
-# == Usage
-#
-#   git sync-local-tags
-#
-# Or use "-n" for dry-run and print out what would be deleted without actually
-# deleting any local tags.
-#
-#   git sync-local-tags -n
+#!/usr/bin/env ruby
 
 module Git
   class SyncTags
