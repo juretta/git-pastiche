@@ -1,0 +1,21 @@
+.\" Manpage for git-sync-tags
+.TH man 1 "May 2012" "1.0" "git sync-tags man page"
+.SH NAME
+git sync-tags  \- Delete local tags that have been removed in the remote
+.SH SYNOPSIS
+git sync-tags 
+.SH DESCRIPTION
+Delete all local tags that are not present anymore in the default remote.
+.SH OPTIONS
+.TP
+.I -n
+Don't remote the tags but print out what would be deleted (dry run)
+.nf
+    git sync-tags -n
+.fi
+.SH SEE ALSO
+git(1)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Stefan Saasen <stefan@saasen.me>
