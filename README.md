@@ -1,13 +1,13 @@
-git extras
-==========
+git pastiche
+============
 
-A few git extras.
+A few git things.
 
-Add the `git-extras` directory to your `PATH`:
+Add the `git-pastiche` directory to your `PATH`:
 
-    export PATH=$PATH:~/git-extras
+    export PATH=$PATH:~/git-pastiche/bin
 
-The git extras commands can be used like any other git command.
+The additional git commands can be used like any other git command.
 
 E.g. to show the incoming changes use:
 
