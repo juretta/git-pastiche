@@ -20,11 +20,11 @@ The additional git commands can be used like any other git command.
 
 E.g. to show the incoming changes use:
 
-> git incoming
+    git incoming
 
 To show the outgoing changes:
 
-> git outgoing
+    git outgoing
 
 
 
@@ -35,11 +35,11 @@ Use the Makefile to copy the scripts to your `/usr/local/bin` directory.
 This will also copy the man pages to the appropriate directories on your
 system.
 
-  make install
+    make install
 
 To remove the scripts and man pages run `uninstall`:
 
-  make uninstall
+    make uninstall
 
 Commands
 ========
