@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+# green: 2
+# blue: 4
+# red: 1
+
+commit_id_format=$(tput setaf 1)
+date_format=$(tput bold; tput setaf 4)
+author_format=$(tput setaf 2)
+bold=$(tput bold)
+reset=$(tput sgr0)
+
+
+git for-each-ref refs/remotes --format="${date_format}%(authordate:relative)${reset} ${commit_id_format}%(objectname:short)${reset} - ${author_format}[%(authorname)]${reset}: %(refname:short): %(subject)" --sort=authordate
