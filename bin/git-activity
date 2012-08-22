@@ -28,7 +28,7 @@ while [[ $1 = -?* ]]; do
             ;;
         --fetch)
             echo "Fetch updates"
-            git fetch --all -q
+            git fetch -q
             ;;
         -c|--count)
             shift
