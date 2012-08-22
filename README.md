@@ -52,3 +52,4 @@ Commands
   blob
 * `git sync-local-tags` -> Delete local tags that don't exist in the remote
   anymore
+* `git activity` -> Show activity on all refs/branches
