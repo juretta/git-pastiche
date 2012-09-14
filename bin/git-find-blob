@@ -17,8 +17,8 @@ set -e
 
 blob="$1"
 shift
-    if git ls-tree -r $tree | grep -q "${blob}" ; then
 git log "$@" --all --pretty=format:'%T %h %s' | while read tree commit subject ; do
+    if git ls-tree -t -r $tree | grep -q "${blob}" ; then
         echo "${commit} ${subject}"
     fi
 done
