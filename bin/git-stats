@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+
+# actually parse the options and do stuff
+while [[ $1 = -?* ]]; do
+    case $1 in
+        --gc)
+            echo "Repacking objects"
+            git gc --aggressive --auto
+            ;;
+        *) ;;
+    esac
+
+shift
+done
+
+# Summarize information about the current git repository
+NUMBER_OF_COMMITS=`git rev-list --all | wc -l`
+NUMBER_OF_OBJECTS=`git count-objects -v | grep in-pack | cut -f 2 -d ':'`
+NUMBER_OF_FILES=`git ls-files | wc -l | tr -d ' '`
+NUMBER_OF_CONTRIBUTORS=`git shortlog -s -n | wc -l | tr -d ' '`
+AGE=`git log --reverse --format='%cr' | head -n 1`
+
+
+# %'.3f\n
+printf "Number of contributors: %'12.d\n" $NUMBER_OF_CONTRIBUTORS
+printf "Number of commits     : %'12.d\n" $NUMBER_OF_COMMITS
+printf "Number of objects     : %'12.d\n" $NUMBER_OF_OBJECTS
+printf "Number of files       : %'12.d\n" $NUMBER_OF_FILES
+printf "First commit          : %12s\n" "$AGE"
