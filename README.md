@@ -42,14 +42,12 @@ To remove the scripts and man pages run `uninstall`:
     make uninstall
 
 Commands
-========
+=========
 
-* `git incoming` -> Show incoming changes (will fetch changes from the remote)
-* `git outgoing` -> Show the changes about to be pushed to the remote
-* `git filesize-history` -> Show the filesize history of a single file in the
-  repository
-* `git find-blob` -> Given a blob id (SHA1), list the commits that contain the
-  blob
-* `git sync-local-tags` -> Delete local tags that don't exist in the remote
-  anymore
-* `git activity` -> Show activity on all refs/branches
+* `git activity` -> Show the recent activity on each ref
+* `git filesize-history` -> Show how the filesize changed for a given PATH
+* `git find-blob` -> Find the commits that contain the given object id
+* `git incoming` -> Show new changesets in the remote
+* `git outgoing` -> Show local changesets not on the remote
+* `git stats` -> Show repository statistics
+* `git sync-tags` -> Delete local tags that have been removed in the remote
