@@ -18,16 +18,16 @@ extractCommandOverview path = do
 replaceCommandsIn :: FilePath -> [String] -> IO String
 replaceCommandsIn path content = do
     existing <- readFile path
-    let new = break (== separator) $ lines existing
-    let clean = unwords . filter (/= "\\-") . words
-    let format e = "* `" ++ unwords (take 2 $ words e) ++ "` -> " ++ unwords (drop 2 $ words e)
+    let new         = break (== separator) $ lines existing
+        clean       = unwords . filter (/= "\\-") . words
+        format e    = "* `" ++ unwords (take 2 $ words e) ++ "` -> " ++ unwords (drop 2 $ words e)
     return $ unlines $ fst new ++ [separator, "=========", ""] ++ map (format . clean) content
 
 separator = "Commands"
 
 main = do
-    let readme = "README.md"
-    let tmp = "README2.md"
+    let readme  = "README.md"
+        tmp     = "README2.md"
     commandList <- extractCommandOverview "man"
     new <- replaceCommandsIn readme commandList
     writeFile tmp new
