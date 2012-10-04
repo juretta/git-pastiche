@@ -11,14 +11,13 @@ fi
 set -u
 set -e
 
-
 FILEPATH=$1
 FILENAME=`basename ${FILEPATH}`
 
 #echo "File size history for \"${FILEPATH}\":"
 
 for commit in $(git log --pretty="%h" -- ${FILEPATH}); do
-  bytes="`git ls-tree -l -r ${commit} | grep ${FILENAME} | awk '{print $4}'`"
+  bytes="`git ls-tree -l -r ${commit} | grep -E "[[:space:]]${FILEPATH}" | awk '{print $4}'`"
   human=`echo ${bytes} | awk '{ split( "B KB MB GB TB" , v ); s=1; while( $1>1024 ){ $1/=1024; s++ } print int($1) v[s] }'`
   printf "Commit %10b: %10b (%d bytes)\n" $commit $human $bytes
 done
