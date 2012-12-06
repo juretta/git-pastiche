@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage:"
+  echo ""
+  echo "  git mirror SOURCE TARGET"
+  echo ""
+  exit -1
+fi
+
+set -e
+set -u
+
+SOURCE=$1
+TARGET=$2
+
+git fetch "${SOURCE}"
+for name in $(git for-each-ref "refs/remotes/${SOURCE}" --format="%(refname:short)" | grep -v HEAD); do
+    echo "Pushing branch '${name}' to ${TARGET}"
+    git push -q --tags "${TARGET}" ${name}:refs/heads/${name#${SOURCE}/}
+done

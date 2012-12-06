@@ -1,0 +1,31 @@
+.\" Manpage for git-mirror
+.TH man 1 "May 2012" "1.0" "git mirror man page"
+.SH NAME
+git mirror  \- Push tags and branches from one repository to another
+.SH SYNOPSIS
+git mirror SOURCE TARGET
+.SH DESCRIPTION
+Push all the branches and tags from repository SOURCE into repository TARGET.
+
+.SH OPTIONS
+.TP
+.I SOURCE
+The name of the remote that is the source repository (e.g. origin).
+.TP
+.I TARGET
+The name of the remote that is the target repository.
+
+E.g.
+.nf
+    git mirror origin bitbucket
+.fi
+
+will push all the branches and tags that are available in origin to the
+repository named bitbucket.
+
+.SH SEE ALSO
+git(1)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Stefan Saasen <stefan@saasen.me>
