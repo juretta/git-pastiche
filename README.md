@@ -48,6 +48,7 @@ Commands
 * `git filesize-history` -> Show how the filesize changed for a given PATH
 * `git find-blob` -> Find the commits that contain the given object id
 * `git incoming` -> Show new changesets in the remote
+* `git mirror` -> Push tags and branches from one repository to another
 * `git outgoing` -> Show local changesets not on the remote
 * `git stats` -> Show repository statistics
 * `git sync-tags` -> Delete local tags that have been removed in the remote
