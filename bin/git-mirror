@@ -14,8 +14,5 @@ set -u
 SOURCE=$1
 TARGET=$2
 
-git fetch "${SOURCE}"
-for name in $(git for-each-ref "refs/remotes/${SOURCE}" --format="%(refname:short)" | grep -v HEAD); do
-    echo "Pushing branch '${name}' to ${TARGET}"
-    git push -q --tags "${TARGET}" ${name}:refs/heads/${name#${SOURCE}/}
-done
+git fetch --prune "${SOURCE}"
+git push --prune $TARGET refs/remotes/${SOURCE}/*:refs/heads/*
