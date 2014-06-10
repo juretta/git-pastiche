@@ -1,0 +1,10 @@
+currentBranch=`git rev-parse --abbrev-ref HEAD` &&
+git stash &&
+git checkout master &&
+git pull &&
+git checkout $currentBranch &&
+git merge master &&
+git checkout master &&
+git merge $currentBranch &&
+git checkout $currentBranch &&
+git stash pop;
