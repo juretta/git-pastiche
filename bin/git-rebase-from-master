@@ -16,7 +16,8 @@ grep -q "No local changes" "$TEMPFILE" || HAVE_STASH=1
 git checkout master &&
 git pull &&
 git checkout $CURRENT_BRANCH &&
-git merge master;
+git pull &&
+git rebase master;
 
 # restore any stashed changes
 if [ "$HAVE_STASH" -ne 0 ]
