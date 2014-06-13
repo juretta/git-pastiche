@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Return the name of the current branch
 CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`;
 
