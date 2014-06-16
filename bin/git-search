@@ -1,0 +1,3 @@
+#!/bin/bash
+
+git grep -l --all-match -e $1 $(git rev-list --all)

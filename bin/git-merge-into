@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Branch to merge into defaults to "master"
+if [ ! -z "$1" -a "$1" != " " ];
+then
+        OTHER_BRANCH="$1"
+else
+        OTHER_BRANCH="master"
+fi
+
 # Return the name of the current branch
 CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`;
 
@@ -15,12 +23,12 @@ git stash | tee "$TEMPFILE"
 HAVE_STASH=0
 grep -q "No local changes" "$TEMPFILE" || HAVE_STASH=1
 
-git checkout master &&
+git checkout $OTHER_BRANCH &&
 git pull &&
 git checkout $CURRENT_BRANCH &&
 git pull &&
-git merge master &&
-git checkout master &&
+git merge $OTHER_BRANCH &&
+git checkout $OTHER_BRANCH &&
 git merge $CURRENT_BRANCH &&
 git checkout $CURRENT_BRANCH;
 
