@@ -18,7 +18,7 @@ done
 # Summarize information about the current git repository
 NUMBER_OF_COMMITS=`git rev-list --all | wc -l`
 NUMBER_OF_OBJECTS=`git count-objects -v | grep in-pack | cut -f 2 -d ':'`
-NUMBER_OF_FILES=`git ls-files | wc -l | tr -d ' '`
+NUMBER_OF_FILES=`git ls-tree --full-tree -r HEAD | wc -l | tr -d ' '`
 NUMBER_OF_CONTRIBUTORS=`git shortlog -s -n | wc -l | tr -d ' '`
 NUMBER_OF_REFS=`git show-ref --heads -s | wc -l | tr -d ' '`
 AGE=`git log --date-order --reverse --format='%cr' | head -n 1`
